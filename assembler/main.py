@@ -17,7 +17,6 @@ def main():
             else:
                 line = strip_space(line)
                 line = assemble(line)
-                print(line)
                 h.write(line + "\n")
 
 
