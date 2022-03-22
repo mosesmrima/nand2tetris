@@ -2,6 +2,8 @@
 This module contains 3 functions that do the actual conversion of
 mnemonics to binary code
 """
+
+
 def computation(cmp):
     """
     This function computes the computation mnemonic
