@@ -10,7 +10,6 @@ def main():
 
     with open(asm_path, "rt") as f, open(hack_path, "wt") as h:
         lines = f.readlines()
-        count = 0
         for line in lines:
             if line.isspace() or (line.strip().startswith("//")):
                 pass
