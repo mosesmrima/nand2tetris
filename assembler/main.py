@@ -5,8 +5,10 @@ from parser import assemble
 
 
 def main():
-    path = sys.argv[1]
-    with open(path, "r") as f:
+    asm_path = sys.argv[1]
+    hack_path = asm_path.replace(".asm", ".hack")
+
+    with open(asm_path, "rt") as f, open(hack_path, "wt") as h:
         lines = f.readlines()
         count = 0
         for line in lines:
@@ -14,7 +16,9 @@ def main():
                 pass
             else:
                 line = strip_space(line)
-                print(assemble(line))
+                line = assemble(line)
+                print(line)
+                h.write(line + "\n")
 
 
 if __name__ == "__main__":
