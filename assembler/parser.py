@@ -31,7 +31,10 @@ def c_instruction(instruction):
     :param instruction: the instruction
     :return: binary representation
     """
-    dest, comp, jmp = re.split(r"=+|;+", instruction) + [None]
+    dest, *_ = instruction.rpartition("=")
+    *_, compjmp = instruction.rpartition("=")
+    comp = compjmp.rsplit(";")[0]
+    jmp = (compjmp.rsplit(";") + [""])[1]
     dmnem = destination(dest)
     jmnen = jump(jmp)
     cmnem = computation(comp)
