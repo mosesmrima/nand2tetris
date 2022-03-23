@@ -1,6 +1,17 @@
-import re
+""" this module contains functions to handle the conversion instructions to their binary equivalent"""
+from code import destination
+from code import jump
+from code import computation
 
-from code import destination, jump, computation
+
+def replace(symbol, symbol_table):
+    """
+    This function looks up & replaces a symbol with the corresponding assigned number
+    :param symbol: the symbol to look up
+    :param symbol_table: the symbol table to look up in
+    :return: the assigned number
+    """
+    return symbol_table.get(symbol)
 
 
 def strip_space(line):
@@ -13,14 +24,18 @@ def strip_space(line):
     return head.strip()
 
 
-def a_instruction(instruction):
+def a_instruction(instruction, symbol_table):
     """
     This function converts a-instructions to their binary form
+    :param symbol_table: symbol table to lookup
     :param instruction: the instruction to convert
     :return: the binary representation of the instruction
     """
     inst = instruction.replace("@", "")
-    number = int(inst)
+    try:
+        number = int(inst)
+    except ValueError:
+        number = replace(inst, symbol_table)
     code = "{0:b}".format(number)
     return code.zfill(16)
 
@@ -41,15 +56,16 @@ def c_instruction(instruction):
     return "111" + cmnem + dmnem + jmnen
 
 
-def assemble(instruction):
+def assemble(instruction, symbol_table):
     """
     This functions identifies the instruction type i.e. a-instruction or c-instruction &
     calls the corresponding function to unpack.
+    :param symbol_table: symbol table to do lookup
     :param instruction:  the instruction to unpack
     :return: th
     """
     if instruction.startswith("@"):
-        code = a_instruction(instruction)
+        code = a_instruction(instruction, symbol_table)
     else:
         code = c_instruction(instruction)
     return code
